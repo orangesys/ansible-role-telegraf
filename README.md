@@ -15,7 +15,7 @@ Role Variables
 The high-level variables are stored in the `defaults/main.yml` file. The most important ones being:
 
 ```
-# Channel of Telegraf to install (currently only 'stable' is supported)
+# Channel of Telegraf to install (currently only '1.3.2' is supported)
 telegraf_agent_version: '1.3.2' or highly
 
 ```
