@@ -1,0 +1,33 @@
+[global_tags]
+
+[agent]
+  interval = "1m"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "1m"
+  flush_jitter = "0s"
+  precision = ""
+  debug = true
+  logfile = ""
+  hostname = "{{ ansible_hostname }}"
+  omit_hostname = false
+
+[[outputs.orangesys]]
+  urls = ["https://{{ orangesys_url }}"]
+  database = "telegraf" # required
+  jwt_token = "{{ orangesys_jwt_token }}"
+
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs"]
+[[inputs.diskio]]
+[[inputs.kernel]]
+[[inputs.mem]]
+[[inputs.processes]]
+[[inputs.swap]]
+[[inputs.system]]

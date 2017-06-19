@@ -1,0 +1,32 @@
+---
+# tasks file for ansible-telegraf
+- name: Download the package for ubuntu
+  apt:
+    deb: https://github.com/orangesys/telegraf-output-orangesys/releases/download/{{ telegraf_agent_version }}/telegraf_{{ telegraf_agent_version }}-1_amd64.deb
+  when: ansible_os_family == "Debian"
+
+- name: Download the package for Centos
+  yum:
+    name: https://github.com/orangesys/telegraf-output-orangesys/releases/download/{{ telegraf_agent_version }}/telegraf-{{ telegraf_agent_version }}-1.x86_64.rpm
+  when: ansible_os_family == "RedHat"
+
+- name: Install sysstat for ubuntu
+  apt:
+    name: sysstat
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install sysstat for Centos
+  yum:
+    name: sysstat
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Copy the template
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+    owner: telegraf
+    group: telegraf
+    mode: 0644
+  notify: restart telegraf
