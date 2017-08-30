@@ -1,6 +1,16 @@
 version: 2
+
+references:
+  container_config:
+    test_roles: &test_roles
+      run:
+        name: test ansible playbook
+        command: |
+          ansible -m setup localhost
+        ansible-playbook -i "localhost," -c local ./tests/test.yml -v
 jobs:
   build:
+    <<: *container_config
     docker:
       - image: centos:6
     steps:
@@ -9,10 +19,6 @@ jobs:
           name: Install ansible
           command: |
             rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-            yum install ansible -y
+            yum install ansible -y -q
             ansible --version
-            ansible -m setup localhost
-      - run:
-          name: Test roles
-          command: |
-            ansible-playbook -i "localhost," -c local ./tests/test.yml -v
+      - *test_roles
