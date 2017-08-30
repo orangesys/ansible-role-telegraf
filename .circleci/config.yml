@@ -22,3 +22,9 @@ jobs:
             yum install ansible -y -q
             ansible --version
       - *test_roles
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - centos6
