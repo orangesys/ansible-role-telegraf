@@ -37,6 +37,20 @@ jobs:
             ansible --version
       - *test_roles
 
+  amzonlinux:
+    <<: *container_config
+    docker:
+      - image: amzonlinux
+    steps:
+      - checkout
+      - run:
+          name: Install ansible
+          command: |
+            rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+            yum install ansible -y -q
+            ansible --version
+      - *test_roles
+
   ubuntu14:
     <<: *container_config
     docker:
@@ -46,24 +60,11 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            apt-add-repository ppa:ansible/ansible
-            apt-get update
-            apt-get install ansible
-            ansible --version
-      - *test_roles
-
-  ubuntu16:
-    <<: *container_config
-    docker:
-      - image: ubuntu:xenial
-    steps:
-      - checkout
-      - run:
-          name: Install ansible
-          command: |
-            apt-add-repository ppa:ansible/ansible
-            apt-get update
-            apt-get install ansible
+            sudo apt-get update
+            sudo apt-get install software-properties-common
+            sudo apt-add-repository ppa:ansible/ansible
+            sudo apt-get update
+            sudo apt-get install ansible
             ansible --version
       - *test_roles
 
@@ -74,4 +75,4 @@ workflows:
       - centos6
       - centos7
       - ubuntu14
-      - ubuntu16
+      - amzonlinux
