@@ -63,11 +63,11 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            sudo apt-get update -qyy
-            sudo apt-get install software-properties-common -qyy
-            sudo apt-add-repository ppa:ansible/ansible -y
-            sudo apt-get update -qyy
-            sudo apt-get install ansible -qyy
+            apt-get update -qyy
+            apt-get install software-properties-common -qyy
+            apt-add-repository ppa:ansible/ansible -y
+            apt-get update -qyy
+            apt-get install ansible -qyy
             ansible --version
       - *test_roles
 
