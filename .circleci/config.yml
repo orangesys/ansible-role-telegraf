@@ -15,4 +15,4 @@ jobs:
       - run:
           name: Test roles
           command: |
-            ansible-playbook ./tests/test.yml -i ./tests/inventory -v
+            ansible-playbook -i "localhost," -c local ./tests/test.yml -v
