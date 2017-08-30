@@ -1,7 +1,6 @@
 version: 2
-
 jobs:
-  centos6:
+  build:
     docker:
       - image: centos6
     steps:
