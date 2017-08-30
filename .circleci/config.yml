@@ -23,8 +23,57 @@ jobs:
             ansible --version
       - *test_roles
 
+  centos7:
+    <<: *container_config
+    docker:
+      - image: centos:7
+    steps:
+      - checkout
+      - run:
+          name: Install ansible
+          command: |
+            rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+            yum install ansible -y -q
+            ansible --version
+      - *test_roles
+
+  ubuntu14:
+    <<: *container_config
+    docker:
+      - image: ubuntu:trusty
+    steps:
+      - checkout
+      - run:
+          name: Install ansible
+          command: |
+            sudo apt-get install software-properties-common
+            sudo apt-add-repository ppa:ansible/ansible
+            sudo apt-get update
+            sudo apt-get install ansible
+            ansible --version
+      - *test_roles
+
+  ubuntu16:
+    <<: *container_config
+    docker:
+      - image: ubuntu:xenial
+    steps:
+      - checkout
+      - run:
+          name: Install ansible
+          command: |
+            sudo apt-get install software-properties-common
+            sudo apt-add-repository ppa:ansible/ansible
+            sudo apt-get update
+            sudo apt-get install ansible
+            ansible --version
+      - *test_roles
+
 workflows:
   version: 2
   test-and-deploy:
     jobs:
       - centos6
+      - centos7
+      - ubuntu14
+      - ubuntu16
