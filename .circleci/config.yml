@@ -37,20 +37,6 @@ jobs:
             ansible --version
       - *test_roles
 
-  amazonlinux:
-    <<: *container_config
-    docker:
-      - image: amazonlinux
-    steps:
-      - checkout
-      - run:
-          name: Install ansible
-          command: |
-            rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-            yum install ansible -y -q
-            ansible --version
-      - *test_roles
-
   ubuntu14:
     <<: *container_config
     docker:
@@ -75,4 +61,3 @@ workflows:
       - centos6
       - centos7
       - ubuntu14
-      - amazonlinux
