@@ -54,6 +54,23 @@ jobs:
             ansible --version
       - *test_roles
 
+  ubuntu16:
+    <<: *container_config
+    docker:
+      - image: ubuntu:xenial
+    steps:
+      - checkout
+      - run:
+          name: Install ansible
+          command: |
+            sudo apt-get update -qyy
+            sudo apt-get install software-properties-common -qyy
+            sudo apt-add-repository ppa:ansible/ansible -y
+            sudo apt-get update -qyy
+            sudo apt-get install ansible -qyy
+            ansible --version
+      - *test_roles
+
 workflows:
   version: 2
   test-and-deploy:
