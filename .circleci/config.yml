@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+            yum install epel-release -y -q
             yum install ansible -y -q
             ansible --version
       - *test_roles
@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+            yum install epel-release -y -q
             yum install ansible -y -q
             ansible --version
       - *test_roles
@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+            rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
             yum install ansible -y -q
             ansible --version
       - *test_roles
