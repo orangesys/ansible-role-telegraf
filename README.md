@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/orangesys/ansible-role-telegraf.svg?style=svg)](https://circleci.com/gh/orangesys/ansible-role-telegraf)
 Orangesys telegraf
 =========
 
