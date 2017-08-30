@@ -1,6 +1,8 @@
 ---
 - hosts: localhost
   remote_user: root
-  gather_facts: False
+  vars:
+  orangesys_url: 'demo.i.orangesys.io'
+  orangesys_jwt_token: 'jwt-token'
   roles:
     - role: ../..
