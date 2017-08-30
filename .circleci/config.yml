@@ -62,7 +62,7 @@ jobs:
           command: |
             sudo apt-get update -qyy
             sudo apt-get install software-properties-common -qyy
-            sudo apt-add-repository ppa:ansible/ansible -qyy
+            sudo apt-add-repository ppa:ansible/ansible -y
             sudo apt-get update -qyy
             sudo apt-get install ansible -qyy
             ansible --version
