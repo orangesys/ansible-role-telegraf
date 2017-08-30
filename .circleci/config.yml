@@ -37,10 +37,10 @@ jobs:
             ansible --version
       - *test_roles
 
-  amzonlinux:
+  amazonlinux:
     <<: *container_config
     docker:
-      - image: amzonlinux
+      - image: amazonlinux
     steps:
       - checkout
       - run:
@@ -60,11 +60,11 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            sudo apt-get update
-            sudo apt-get install software-properties-common
-            sudo apt-add-repository ppa:ansible/ansible
-            sudo apt-get update
-            sudo apt-get install ansible
+            sudo apt-get update -qyy
+            sudo apt-get install software-properties-common -qyy
+            sudo apt-add-repository ppa:ansible/ansible -qyy
+            sudo apt-get update -qyy
+            sudo apt-get install ansible -qyy
             ansible --version
       - *test_roles
 
@@ -75,4 +75,4 @@ workflows:
       - centos6
       - centos7
       - ubuntu14
-      - amzonlinux
+      - amazonlinux
