@@ -9,7 +9,7 @@ references:
           ansible -m setup localhost
           ansible-playbook -i "localhost," -c local ./tests/test.yml -v
 jobs:
-  build:
+  centos6:
     <<: *container_config
     docker:
       - image: centos:6
