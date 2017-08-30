@@ -46,10 +46,9 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            sudo apt-get install software-properties-common
-            sudo apt-add-repository ppa:ansible/ansible
-            sudo apt-get update
-            sudo apt-get install ansible
+            apt-add-repository ppa:ansible/ansible
+            apt-get update
+            apt-get install ansible
             ansible --version
       - *test_roles
 
@@ -62,10 +61,9 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            sudo apt-get install software-properties-common
-            sudo apt-add-repository ppa:ansible/ansible
-            sudo apt-get update
-            sudo apt-get install ansible
+            apt-add-repository ppa:ansible/ansible
+            apt-get update
+            apt-get install ansible
             ansible --version
       - *test_roles
 
