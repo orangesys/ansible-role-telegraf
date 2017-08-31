@@ -6,8 +6,9 @@ references:
       run:
         name: test ansible playbook
         command: |
-          ansible -m setup localhost
-          ansible-playbook -i "localhost," -c local ./tests/test.yml --extra-vars "${jwt-token=ORANGESYS_JWT_TOKEN}"-v
+          echo "orangesys_url: 'demo.i.orangesys.io'" >> defaults/main.yml
+          echo "orangesys_jwt_token: '$ORANGESYS_JWT_TOKEN'" >> defaults/main.yml
+          ansible-playbook -i "localhost," -c local ./tests/test.yml -v
 jobs:
   centos6:
     <<: *container_config
