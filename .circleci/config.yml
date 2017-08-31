@@ -7,7 +7,7 @@ references:
         name: test ansible playbook
         command: |
           ansible -m setup localhost
-          ansible-playbook -i "localhost," -c local ./tests/test.yml -v
+          ansible-playbook -i "localhost," -c local ./tests/test.yml --extra-vars "${jwt-token=ORANGESYS_JWT_TOKEN}"-v
 jobs:
   centos6:
     <<: *container_config

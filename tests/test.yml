@@ -5,4 +5,4 @@
   roles:
     - {role: ../..,
         orangesys_url: 'demo.i.orangesys.io',
-        orangesys_jwt_token: 'jwt-token'}
+        orangesys_jwt_token: '{{ jwt-token }}'}
