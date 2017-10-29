@@ -15,7 +15,7 @@ install:
  # Check ansible version
  - ansible --version
 
-scripts:
+script:
 - ansible-playbook -i "localhost," -c local ./tests/test.yml -v
 
 notifications:
