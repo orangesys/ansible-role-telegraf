@@ -19,6 +19,6 @@ script:
 - ansible-playbook -i "localhost," -c local ./tests/test.yml -v
 
 notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+ webhooks: https://galaxy.ansible.com/api/v1/notifications/
   on:
-    tags: true
+   tags: true
