@@ -3,8 +3,20 @@ language: python
 
 sudo: false
 
+addons:
+ apt:
+   packages:
+   - python-pip
+
+install:
+ # Install ansible
+ - pip install ansible
+
+ # Check ansible version
+ - ansible --version
+
 scripts:
-- true
+- ansible-playbook -i "localhost," -c local ./tests/test.yml -v
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
