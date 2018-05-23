@@ -1,3 +1,6 @@
 ---
 # defaults file for ansible-telegraf
 telegraf_agent_version: '1.6.3'
+orangesys_url: 'demo.i.orangesys.io'
+orangesys_jwt_token: 'jwt-token'
+
