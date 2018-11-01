@@ -48,7 +48,7 @@ version: 2
 
 jobs:
   deps:
-    <<: defaults
+    <<: *defaults
     docker: 
       - image: centos:7
     steps:     
@@ -58,25 +58,25 @@ jobs:
           paths: *working_directory
 
   centos6:
-    <<: defaults
+    <<: *defaults
     docker:
       - image: centos:6
     steps: *steps-centos
 
   centos7:
-    <<: defaults
+    <<: *defaults
     docker:
       - image: centos:7
     steps: *steps-centos
 
   ubuntu14:
-    <<: defaults
+    <<: *defaults
     docker:
       - image: ubuntu:trusty
     steps: *steps-debian
 
   ubuntu16:
-    <<: defaults
+    <<: *defaults
     docker:
       - image: ubuntu:xenial
     steps: *steps-debian
@@ -86,15 +86,15 @@ workflows:
   telegraf:
     jobs:
       - 'deps'  
-      # - 'centos6':
-      #     requires:
-      #       - deps
-      # - 'centos7':
-      #     requires:
-      #       - deps
-      # - 'ubuntu14':
-      #     requires:
-      #       - deps
-      # - 'ubuntu16':
-      #     requires:
-      #       - deps
+      - 'centos6':
+          requires:
+            - deps
+      - 'centos7':
+          requires:
+            - deps
+      - 'ubuntu14':
+          requires:
+            - deps
+      - 'ubuntu16':
+          requires:
+            - deps
