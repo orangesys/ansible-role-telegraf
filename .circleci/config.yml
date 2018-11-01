@@ -45,6 +45,7 @@ steps-debian: &steps-debian
   - *test_roles    
 
 version: 2
+
 jobs:
   deps:
     <<: defaults
@@ -82,7 +83,7 @@ jobs:
 
 workflows:
   version: 2
-  test-and-deploy:
+  telegraf:
     jobs:
       - 'deps'  
       - 'centos6':
