@@ -1,76 +1,85 @@
 version: 2
 
-references:
-  container_config: &container_config
-    test_roles: &test_roles
-      run:
-        name: test ansible playbook
-        command: |
-          echo "orangesys_url: 'demo.i.orangesys.io'" >> defaults/main.yml
-          echo "orangesys_jwt_token: '$ORANGESYS_JWT_TOKEN'" >> defaults/main.yml
-          ansible-playbook -i "localhost," -c local ./tests/test-circleci.yml -v
+defaults: &defaults
+  working_directory: &working_directory
+    ~/ansible-role-telegraf
+
+test_roles: &test_roles
+  run:
+    name: test ansible playbook
+    command: |
+      echo "orangesys_url: 'demo.i.orangesys.io'" >> defaults/main.yml
+      echo "orangesys_jwt_token: '$ORANGESYS_JWT_TOKEN'" >> defaults/main.yml
+      ansible-playbook -i "localhost," -c local ./tests/test-circleci.yml -v
+
+yum-install-ansible: &yum-install-ansible
+  run:
+    name: Install ansible
+    command: |
+      yum install epel-release -y -q
+      yum install ansible -y -q
+      ansible --version
+
+apt-get-ansible: &apt-get-ansible
+  run:
+    name: Install ansible
+    command: |
+      apt-get update -qyy
+      apt-get install software-properties-common -qyy
+      apt-add-repository ppa:ansible/ansible -y
+      apt-get update -qyy
+      apt-get install ansible -qyy
+      ansible --version
+
+steps-centos: &steps-centos
+  - checkout
+  - *yum-install-ansible
+  - *test_roles
+
+checkout_cache_key: &checkout_cache_key v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+restore_checkout_cache: &restore_checkout_cache
+  restore_cache:
+    key: *checkout_cache_key
+
+steps-debian: &steps-debian
+  - *restore_checkout_cache
+  - *apt-get-ansible
+  - *test_roles    
+
 jobs:
+  deps:
+    <<: defaults
+    docker: 
+      - image: centos:7
+    steps:     
+      - checkout
+      - save_cache:
+          key: *checkout_cache_key
+          paths: *working_directory
+
   centos6:
-    <<: *container_config
+    <<: defaults
     docker:
       - image: centos:6
-    steps:
-      - checkout
-      - run:
-          name: Install ansible
-          command: |
-            yum install epel-release -y -q
-            yum install ansible -y -q
-            ansible --version
-      - *test_roles
+    steps: *steps-centos
 
   centos7:
-    <<: *container_config
+    <<: defaults
     docker:
       - image: centos:7
-    steps:
-      - checkout
-      - run:
-          name: Install ansible
-          command: |
-            yum install epel-release -y -q
-            yum install ansible -y -q
-            ansible --version
-      - *test_roles
+    steps: *steps-centos
 
   ubuntu14:
-    <<: *container_config
+    <<: defaults
     docker:
       - image: ubuntu:trusty
-    steps:
-      - checkout
-      - run:
-          name: Install ansible
-          command: |
-            sudo apt-get update -qyy
-            sudo apt-get install software-properties-common -qyy
-            sudo apt-add-repository ppa:ansible/ansible -y
-            sudo apt-get update -qyy
-            sudo apt-get install ansible -qyy
-            ansible --version
-      - *test_roles
+    steps: *steps-debian
 
   ubuntu16:
-    <<: *container_config
+    <<: defaults
     docker:
       - image: ubuntu:xenial
-    steps:
-      - checkout
-      - run:
-          name: Install ansible
-          command: |
-            apt-get update -qyy
-            apt-get install software-properties-common -qyy
-            apt-add-repository ppa:ansible/ansible -y
-            apt-get update -qyy
-            apt-get install ansible -qyy
-            ansible --version
-      - *test_roles
+    steps: *steps-debian
 
 workflows:
   version: 2
