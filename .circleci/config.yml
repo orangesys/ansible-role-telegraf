@@ -72,13 +72,19 @@ jobs:
   ubuntu14:
     <<: *defaults
     docker:
-      - image: ubuntu:trusty
+      - image: ubuntu:14.04
     steps: *steps-debian
 
   ubuntu16:
     <<: *defaults
     docker:
-      - image: ubuntu:xenial
+      - image: ubuntu:16.04
+    steps: *steps-debian
+
+  ubuntu18:
+    <<: *defaults
+    docker:
+      - image: ubuntu:18.04
     steps: *steps-debian
 
 workflows:
@@ -96,5 +102,8 @@ workflows:
           requires:
             - deps
       - 'ubuntu16':
+          requires:
+            - deps
+      - 'ubuntu18':
           requires:
             - deps
