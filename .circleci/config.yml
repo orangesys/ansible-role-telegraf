@@ -85,7 +85,16 @@ workflows:
   version: 2
   test-and-deploy:
     jobs:
-      - centos6
-      - centos7
-      - ubuntu14
-      - ubuntu16
+      - 'deps'  
+      - 'centos6':
+          requires:
+            - deps
+      - 'centos7':
+          requires:
+            - deps
+      - 'ubuntu14':
+          requires:
+            - deps
+      - 'ubuntu16':
+          requires:
+            - deps
