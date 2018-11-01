@@ -29,18 +29,18 @@ apt-get-ansible: &apt-get-ansible
       apt-get install ansible -qyy
       ansible --version
 
-steps-centos: &steps-centos
-  - checkout
-  - *yum-install-ansible
-  - *test_roles
-
 checkout_cache_key: &checkout_cache_key v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 restore_checkout_cache: &restore_checkout_cache
   restore_cache:
     key: *checkout_cache_key
 
+steps-centos: &steps-centos
+  - checkout
+  - *yum-install-ansible
+  - *test_roles
+
 steps-debian: &steps-debian
-  - *restore_checkout_cache
+  - checkout
   - *apt-get-ansible
   - *test_roles    
 
