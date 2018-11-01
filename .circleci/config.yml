@@ -86,15 +86,15 @@ workflows:
   telegraf:
     jobs:
       - 'deps'  
-      - 'centos6':
-          requires:
-            - deps
-      - 'centos7':
-          requires:
-            - deps
-      - 'ubuntu14':
-          requires:
-            - deps
-      - 'ubuntu16':
-          requires:
-            - deps
+      # - 'centos6':
+      #     requires:
+      #       - deps
+      # - 'centos7':
+      #     requires:
+      #       - deps
+      # - 'ubuntu14':
+      #     requires:
+      #       - deps
+      # - 'ubuntu16':
+      #     requires:
+      #       - deps
